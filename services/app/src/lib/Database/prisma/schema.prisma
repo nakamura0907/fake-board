@@ -3,23 +3,21 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model articles {
   id         Int      @id @default(autoincrement())
   user_id    Int
-  body       String   @db.VarChar(255)
-  created_at DateTime @default(now()) @db.DateTime(0)
-  users      users    @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "ref_articles_user_id")
-
-  @@index([user_id], map: "ref_articles_user_id")
+  body       String   @db.Char(255)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model users {
   id       Int        @id @default(autoincrement())
-  name     String     @db.VarChar(30)
-  password String     @db.VarChar(255)
+  name     String     @db.Char(30)
+  password String     @db.Char(255)
   articles articles[]
 }
