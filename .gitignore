@@ -3,3 +3,6 @@ node_modules
 
 # mysql
 services/mysql/data
+
+# postgre
+services/postgre/data

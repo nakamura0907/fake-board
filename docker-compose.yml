@@ -23,32 +23,20 @@ services:
     ports:
       - 3001:3001
 
-  # mysql
-  mysql:
-    image: mysql:8.0-debian
+  # postgre
+  postgre:
+    image: postgres:14.4-bullseye
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: myapp
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      TZ: "Asia/Tokyo"
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: myapp
     volumes:
-      - ./services/mysql/data:/var/lib/mysql
-      - ./services/mysql/sql:/docker-entrypoint-initdb.d
+      - ./services/postgre/data:/var/lib/postgresql/data
     ports:
-      - "3306:3306"
+      - 5432:5432
 
-  # phpmyadmin
-  phpmyadmin:
-    image: phpmyadmin:apache
-    depends_on:
-      - mysql
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOSTS=mysql
-      - PMA_USER=user
-      - PMA_PASSWORD=password
+  # adminer
+  adminer:
+    image: adminer:4.8.1
     ports:
-      - "3307:80"
-    volumes:
-      - ./services/phpmyadmin/sessions:/sessions
+      - 5433:8080

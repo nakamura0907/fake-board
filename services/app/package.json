@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon -L",
     "build": "webpack --config webpack.prod.js",
-    "serve": "node dist/index.js"
+    "serve": "node dist/index.js",
+    "prisma:generate": "npx prisma generate --schema ./src/lib/Database/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
