@@ -1,8 +1,9 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 
 import config from "@/config";
 import errorHandling from "@/middlewares/errorHandling";
+import { PrismaClient } from "@prisma/client";
 
 const app = express();
 
@@ -16,6 +17,13 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 
 // ルーティング
+app.route("").get((req: Request, res: Response) => {
+  (async () => {
+    const prisma = new PrismaClient();
+    const result = await prisma.users.findMany();
+    res.status(200).send(result);
+  })();
+});
 
 // エラーハンドリング
 errorHandling(app);
