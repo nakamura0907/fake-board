@@ -17,9 +17,17 @@ const insert = async (user_id: articles["user_id"], body: articles["body"]) => {
   return article;
 };
 
+/**
+ * データベースから記事一覧を取得
+ * @returns
+ */
 const select = async () => {
-  // データベースから取得
-  return [];
+  const result = await prisma.articles.findMany({
+    orderBy: {
+      created_at: "desc",
+    },
+  });
+  return result;
 };
 
 const booksMapper = {};
