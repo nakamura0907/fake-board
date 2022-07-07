@@ -1,17 +1,19 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "webpack.common.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon -L",
     "build": "webpack --config webpack.prod.js",
-    "serve": "node dist/index.js"
+    "serve": "node dist/index.js",
+    "prisma:generate": "prisma generate --schema ./src/lib/Database/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^4.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "log4js": "^6.5.2"
@@ -23,6 +25,7 @@
     "@types/node": "^18.0.1",
     "dotenv-webpack": "^7.1.1",
     "nodemon": "^2.0.18",
+    "prisma": "^4.0.0",
     "ts-loader": "^9.3.1",
     "ts-node": "^10.8.2",
     "tsconfig-paths": "^4.0.0",
