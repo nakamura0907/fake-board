@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Exception from "@/lib/Exception";
 import { verifyToken } from "@/lib/Token";
+import { hasProperty } from "@/lib/util";
 
 const authMiddleware = (req: Request, _: Response, next: NextFunction) => {
   const authorization = req.headers["authorization"];
@@ -17,8 +18,11 @@ const authMiddleware = (req: Request, _: Response, next: NextFunction) => {
   try {
     const payload = verifyToken(token);
 
-    // TODO: payloadを保存
-    console.log(payload);
+    // TODO: 動作確認
+    if (!hasProperty(payload, "id") || typeof payload.id !== "number")
+      throw new Exception("トークンが誤っています", 401);
+
+    req.user.id = payload.id;
 
     next();
   } catch (error) {
