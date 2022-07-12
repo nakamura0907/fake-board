@@ -15,19 +15,19 @@ const authMiddleware = (req: Request, _: Response, next: NextFunction) => {
     );
 
   const token = authorization.split(" ")[1];
+  let payload;
   try {
-    const payload = verifyToken(token);
-
-    // TODO: 動作確認
-    if (!hasProperty(payload, "id") || typeof payload.id !== "number")
-      throw new Exception("トークンが誤っています", 401);
-
-    req.user.id = payload.id;
-
-    next();
+    payload = verifyToken(token);
   } catch (error) {
     throw new Exception("認証に失敗しました", 401);
   }
+
+  if (!hasProperty(payload, "id") || typeof payload.id !== "number")
+    throw new Exception("トークンが誤っています", 401);
+
+  req.user = { id: payload.id };
+
+  next();
 };
 
 export default authMiddleware;
