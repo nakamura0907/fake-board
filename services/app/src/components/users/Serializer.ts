@@ -9,8 +9,11 @@ class UsersSerializer extends Serializer {
     };
   }
 
-  login() {
-    return {};
+  login(id: number, token: string) {
+    return {
+      id,
+      token,
+    };
   }
 }
 
