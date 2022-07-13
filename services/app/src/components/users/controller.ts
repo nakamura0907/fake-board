@@ -1,4 +1,8 @@
+import Exception from "@/lib/Exception";
 import { NextFunction, Request, Response } from "express";
+import LoginUser from "./domain/model/LoginUser";
+import SignupUser from "./domain/model/SignupUser";
+import usersMapper from "./mapper";
 import UsersSerializer from "./Serializer";
 
 const usersController = () => {
@@ -6,20 +10,32 @@ const usersController = () => {
 
   const signup = (req: Request, res: Response, next: NextFunction) => {
     (async () => {
-      // リクエスト内容の受け取り
-      // 会員登録ユースケースの実行
-      // レスポンスの返却
-      res.status(200).send(serializer.signup());
+      const signupUser = new SignupUser(req);
+
+      // 重複確認
+      const isExists = await usersMapper.isExists(signupUser.name);
+      if (isExists)
+        throw new Exception("そのユーザー名はすでに利用されています");
+
+      // 新規会員登録
+      const user = await usersMapper.insert(
+        signupUser.name,
+        signupUser.password
+      );
+
+      res.status(200).send(serializer.signup(user));
     })().catch(next);
   };
 
   const login = (req: Request, res: Response, next: NextFunction) => {
     (async () => {
-      // リクエスト内容の受け取り
+      const loginUser = new LoginUser(req);
+      console.log(loginUser);
 
-      // ログインユースケースの実行
+      // ユーザーの取得
+      // パスワード検証
       // トークン生成
-      // レスポンスの返却
+
       res.status(200).send(serializer.login());
     })().catch(next);
   };
