@@ -20,4 +20,5 @@ model users {
   name     String     @db.VarChar(30)
   password String     @db.VarChar(255)
   articles articles[]
+  @@unique([name])
 }
