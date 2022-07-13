@@ -16,7 +16,8 @@ class SignupUser {
 
     if (!name || name === "")
       throw new Exception("ユーザー名を入力してください", 422);
-    // TODO: 英数チェック
+    if (!name.match(/^[A-Za-z0-9]*$/))
+      throw new Exception("ユーザー名を半角英数字で入力してください", 422);
     const nameLength = name.length;
     if (nameLength < 3 || nameLength > 30)
       throw new Exception(
@@ -26,7 +27,8 @@ class SignupUser {
 
     if (!password || password === "")
       throw new Exception("パスワードを入力してください", 422);
-    // TODO: 英数チェック
+    if (!password.match(/^[A-Za-z0-9]*$/))
+      throw new Exception("パスワードを半角英数字で入力してください", 422);
     const passLength = password.length;
     if (passLength < 3 || passLength > 255)
       throw new Exception(
