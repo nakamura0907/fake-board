@@ -1,6 +1,6 @@
-# API ドキュメント ver0.1
+# API ドキュメント ver0.2.1
 
-- [API ドキュメント ver0.1](#api-ドキュメント-ver01)
+- [API ドキュメント ver0.2.1](#api-ドキュメント-ver021)
   - [users](#users)
     - [会員登録](#会員登録)
       - [URL](#url)
@@ -95,7 +95,7 @@ POST /users/login
 
 #### ステータスコード
 
-- 403: トークン検証に失敗した
+- 401: トークン検証に失敗した
 
 ### 記事の投稿
 
@@ -114,9 +114,9 @@ POST /articles
 ```
 {
   "id": -1,
-  "user_id": -1,
+  "userId": -1,
   "body": "テスト投稿です。",
-  "created_at": "YYYY-MM-DD H:i:s",
+  "createdAt": "YYYY-MM-DD H:i:s",
 }
 ```
 
@@ -142,9 +142,9 @@ GET /articles
   articles: [
     {
       "id": -1,
-      "user_id": -1,
+      "userId": -1,
       "body": "テスト投稿です。",
-      "created_at": "YYYY-MM-DD H:i:s",
+      "createdAt": "YYYY-MM-DD H:i:s",
     },
     ...
   ]

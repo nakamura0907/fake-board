@@ -32,7 +32,8 @@ services:
       POSTGRES_DB: myapp
       TZ: "Asia/Tokyo"
     volumes:
-      - ./services/postgre/data:/var/lib/postgresql/data
+      # - ./services/postgre/data:/var/lib/postgresql/data
+      - ./services/postgre/sql:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
 

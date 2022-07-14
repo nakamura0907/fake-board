@@ -3,6 +3,7 @@ import cors from "cors";
 
 import config from "@/config";
 import errorHandling from "@/middlewares/errorHandling";
+import usersRouter from "@/components/users/router";
 
 const app = express();
 
@@ -16,6 +17,7 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 
 // ルーティング
+app.use("/users", usersRouter(express));
 
 // エラーハンドリング
 errorHandling(app);
