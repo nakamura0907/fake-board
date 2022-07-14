@@ -7,6 +7,11 @@ import UsersSerializer from "./Serializer";
 import { compareData } from "@/lib/Hash";
 import { signToken } from "@/lib/Token";
 
+// エラーメッセージ
+const MESSAGE_DUPLICATE_USERS = "そのユーザー名はすでに利用されています";
+const MESSAGE_FAILED_LOGIN =
+  "アカウントが存在しないかユーザー名またはパスワードが誤っています";
+
 const usersController = () => {
   const serializer = new UsersSerializer();
 
@@ -16,8 +21,7 @@ const usersController = () => {
 
       // 重複確認
       const isExists = await usersMapper.isExists(signupUser.name);
-      if (isExists)
-        throw new Exception("そのユーザー名はすでに利用されています");
+      if (isExists) throw new Exception(MESSAGE_DUPLICATE_USERS);
 
       // 新規会員登録
       const user = await usersMapper.insert(
@@ -35,18 +39,11 @@ const usersController = () => {
 
       // ユーザーの取得
       const user = await usersMapper.fetchByName(loginUser.name);
-      if (!user)
-        throw new Exception(
-          "アカウントが存在しないかユーザー名またはパスワードが誤っています",
-          404
-        );
+      if (!user) throw new Exception(MESSAGE_FAILED_LOGIN, 404);
 
       // パスワード検証
       if (!compareData(loginUser.password, user.password))
-        throw new Exception(
-          "アカウントが存在しないかユーザー名またはパスワードが誤っています",
-          404
-        );
+        throw new Exception(MESSAGE_FAILED_LOGIN, 404);
 
       // トークン生成
       const payload = {

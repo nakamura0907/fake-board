@@ -2,7 +2,6 @@ import { prisma } from "@/lib/Database/prisma";
 import { users } from "@prisma/client";
 
 const insert = async (name: users["name"], password: users["password"]) => {
-  console.log(name, password);
   const user = await prisma.users.create({
     data: {
       name,
